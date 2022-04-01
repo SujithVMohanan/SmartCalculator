@@ -22,4 +22,4 @@ def getMicVoice():
     print("Completed getMicVoice ..") 
     return voice_data
 
-getMicVoice()
+#getMicVoice()
