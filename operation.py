@@ -2,7 +2,7 @@ import operator
 from getVoice import getMicVoice
 
 # my_string = getMicVoice()
-my_string = '1 + 2 x 3 + 10'
+my_string = '1 + 2 - 20 + 40 + 1234 divide 100 x 10 / 5'
 print(my_string)
 print(my_string.split())
 def getOperator(op):
@@ -17,6 +17,7 @@ def getOperator(op):
         'multiple' : operator.mul,
         'divided' :operator.__truediv__,
         'divide' : operator.__truediv__,
+        '/' : operator.__truediv__,
         'Mod' : operator.mod,
         'mod' : operator.mod,
         '^' : operator.xor,
@@ -24,36 +25,58 @@ def getOperator(op):
         }[op]
 
 def eval_binary_expr(op1, oper, op2):
-    op1,op2 = int(op1), int(op2)
+    op1,op2 = float(op1), float(op2)
     return getOperator(oper)(op1, op2)
 
 def getNumber(*args):
+    global ra
     op1 = 0
     args = list(args)
-    if 'x' in args:
-        indx = args.index('x')
-        op1 = args[indx-1]
-        oper = args[indx]
-        op2 = args[indx+1]
-        val = eval_binary_expr(op1,oper,op2)
-        args.remove(args[indx - 1])
-        args.remove(args[indx - 1])
-        args.remove(args[indx - 1])
-        print(val)
-        op1 = 0
-        args.insert(indx-1,val)
-        print('After MD '+str(args))
+    indx = 0 
+    len_arg = len(args)
+    # for ra in range(len_arg):
+    ra = 0
+    while ra <= len_arg:
+        try:
+            if args[ra] == 'x':
+                indx = args.index('x')
+            elif args[ra] == 'divide':
+                indx = args.index('divide')
+            elif args[ra] == 'divided':
+                indx = args.index('divided')
+            elif args[ra] == '/':
+                indx = args.index('/')
+            else:
+                ra += 1 
+                continue
+            op1 = args[indx-1]
+            oper = args[indx]
+            op2 = args[indx+1]
+            val = float(eval_binary_expr(op1,oper,op2))
+            print(val)
+            args.remove(args[indx - 1])
+            args.remove(args[indx - 1])
+            args.remove(args[indx - 1])
+            op1 = 0
+            args.insert(indx-1,str(val))
+            print(args)
+            ra = indx - 1
+            print(ra)
+        except Exception as es:
+            print(es)
+            break
+    print(args)
 
 
     for ar in range(len(args)):
         if ar % 2 == 0:
-            op2 = int(args[ar])
+            op2 = float(args[ar])
             if ar > 1:
                 oper = args[ar-1]
             else:
                 oper = '+'
             value = eval_binary_expr(op1,oper,op2)
-            op1 = value
+            op1 = float(value)
     
             print('total '+ str(value))
 
