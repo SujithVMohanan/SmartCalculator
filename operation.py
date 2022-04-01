@@ -2,7 +2,7 @@ import operator
 from getVoice import getMicVoice
 
 # my_string = getMicVoice()
-my_string = '1 + 2 + 3 x 2'
+my_string = '1 + 2 x 3 + 10'
 print(my_string)
 print(my_string.split())
 def getOperator(op):
@@ -29,14 +29,20 @@ def eval_binary_expr(op1, oper, op2):
 
 def getNumber(*args):
     op1 = 0
+    args = list(args)
     if 'x' in args:
         indx = args.index('x')
-        print(indx)
         op1 = args[indx-1]
         oper = args[indx]
         op2 = args[indx+1]
         val = eval_binary_expr(op1,oper,op2)
+        args.remove(args[indx - 1])
+        args.remove(args[indx - 1])
+        args.remove(args[indx - 1])
         print(val)
+        op1 = 0
+        args.insert(indx-1,val)
+        print('After MD '+str(args))
 
 
     for ar in range(len(args)):
@@ -49,12 +55,7 @@ def getNumber(*args):
             value = eval_binary_expr(op1,oper,op2)
             op1 = value
     
-    print('total '+ str(value))
-                
-        # else:
-        #     oper = args[ar]
-        #     is_oper = True
-
+            print('total '+ str(value))
 
 
 
@@ -64,6 +65,6 @@ def callOpr():
        getNumber(*(my_string.split()))
     except Exception as es:
         print(es)
-        print("Can't Recognized ..")
+        print("Can't Recognized                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ..")
 
 callOpr()
