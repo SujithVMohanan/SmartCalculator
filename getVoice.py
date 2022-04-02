@@ -1,8 +1,5 @@
-from logging import exception
-import operator
 import speech_recognition as sr
-from word2number import w2n    # convert word number to integer number    
-
+from word2number import w2n  # convert word number to integer number
 
 # finding the version of sr
 # print("Verion of the speechRecognition : "+ sr.__version__)
@@ -13,7 +10,7 @@ r = sr.Recognizer()
 # getting voice from Microphone
 def getMicVoice():
     with sr.Microphone() as source:
-        print("Say What you want to calculate")
+        print("Say")
         r.adjust_for_ambient_noise(source)     # reducing the noices 
         audio = r.listen(source)
         voice_data = ''
@@ -28,10 +25,8 @@ def getMicVoice():
     return voice_data
 
 
-def getVoice():
+def getVoice(v_data):
     vl = False
-    v_data = getMicVoice()   # get the voice
-    #v_data = '1 + 2 + 3 + Hindu 3 into 4'
     v_data = list(v_data.split())
     l = 0
     while l < len(v_data):
