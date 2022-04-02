@@ -1,7 +1,10 @@
+import operator
 import speech_recognition as sr
+from word2number import w2n    # convert word number to integer number    
+
 
 # finding the version of sr
-print("Verion of the speechRecognition : "+ sr.__version__)
+# print("Verion of the speechRecognition : "+ sr.__version__)
 
 # Recognizing the audio(speech)
 r = sr.Recognizer()
@@ -15,11 +18,87 @@ def getMicVoice():
         voice_data = ''
         try:
             voice_data = r.recognize_google(audio)
-            print(voice_data)
+           # print(voice_data)
         except Exception as es:
-            voice_data = "Can't Recognized"
+           # voice_data = "Can't Recognized"
             print(es)
     print("Completed getMicVoice ..") 
     return voice_data
 
-#getMicVoice()
+
+def getVoice():
+    vl = False
+    # v_data = getMicVoice()   # get the voice
+    v_data = 'one plus two + three minus four + minus 6 into minus 7 multiple 10 hindo 22 hnto 11 divide 10'
+    v_data = list(v_data.split())
+    l = 0
+    while l < len(v_data):
+        val = v_data[l]
+        a_v = ['add', 'plus', 'addition'] # addtion correcting
+        if val in a_v:
+            v_data[l] = '+'
+        else:
+            for v in a_v: 
+                vl = v in val
+                if vl :
+                    v_data[l] = '+'
+                    vl = False
+                else:
+                    pass
+
+        s_v = ['minus', 'substraction'] # substrction correcting
+        if val in s_v:
+            v_data[l] = '-'
+        else:
+            for v in s_v: 
+                vl = v in val
+                if vl :
+                    v_data[l] = '-'
+                    vl = False
+                else:
+                    pass
+
+        d_v = ['divideby', 'divion', 'divided', 'divide'] # divide correcting
+        if val in d_v:
+            v_data[l] = '/'
+        else:
+            for v in d_v: 
+                vl = v in val
+                if vl :
+                    v_data[l] = '/'
+                    vl = False
+                else:
+                    pass
+
+        x_v = ['into', 'indu', 'in 2', 'multiple', 'multipleby', 'multiple by', 'nto', 'ento', 'hindo']
+        if val in x_v:                 # multiple correcting
+            v_data[l] = 'x'
+        else:
+            for v in x_v : 
+                vl = v in val
+                if vl :
+                    v_data[l] = 'x'
+                    vl = False
+                else:
+                    pass
+        
+        try:
+            val = w2n.word_to_num(val)
+            v_data[l] = val
+        except Exception as es :
+            pass
+        l += 1
+    
+    for l_n in range(len(v_data)):
+        val = v_data[l_n]
+        is_str = isinstance(val, str)
+        is_2str = isinstance(v_data[l_n + 1], str)
+        if is_str and is_2str:
+            v_data = "Can't Calculate"
+            break
+
+    print(v_data)
+    return v_data
+
+
+getVoice()
