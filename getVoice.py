@@ -1,3 +1,4 @@
+from logging import exception
 import operator
 import speech_recognition as sr
 from word2number import w2n    # convert word number to integer number    
@@ -23,13 +24,14 @@ def getMicVoice():
            # voice_data = "Can't Recognized"
             print(es)
     print("Completed getMicVoice ..") 
+    print(voice_data)
     return voice_data
 
 
 def getVoice():
     vl = False
-    # v_data = getMicVoice()   # get the voice
-    v_data = 'one plus two + three minus four + minus 6 into minus 7 multiple 10 hindo 22 hnto 11 divide 10'
+    v_data = getMicVoice()   # get the voice
+    #v_data = '1 + 2 + 3 + Hindu 3 into 4'
     v_data = list(v_data.split())
     l = 0
     while l < len(v_data):
@@ -88,17 +90,22 @@ def getVoice():
         except Exception as es :
             pass
         l += 1
-    
+    # print(v_data)
     for l_n in range(len(v_data)):
         val = v_data[l_n]
-        is_str = isinstance(val, str)
-        is_2str = isinstance(v_data[l_n + 1], str)
-        if is_str and is_2str:
-            v_data = "Can't Calculate"
-            break
+        try:
+            if l_n > 0 :
+                is_str = isinstance(v_data[l_n - 1], str) 
+                is_2str = isinstance(val, str)
+                if is_str and is_2str:
+                    v_data = "Can't Calculate"
+                    break
+        except:
+            print('String founding error')
+        
 
-    print(v_data)
+    # print(v_data)
     return v_data
 
 
-getVoice()
+# getVoice()

@@ -32,29 +32,28 @@ def getNumber(*args):
     indx = 0 
     len_arg = len(args)
     ra = 0
-    while ra < len_arg:
+    while ra < len_arg + 1:
         try:
-            if args[ra] == 'x':
-                indx = args.index('x')
-            elif args[ra] == '/':
-                indx = args.index('/')
+            if args[ra] == 'x' or args[ra] == '/':
+                indx = ra
             else:
                 ra += 1 
                 continue
             op1 = args[indx-1]
             oper = args[indx]
             op2 = args[indx+1]
-            val = eval_binary_expr(op1,oper,op2)
+            val = float(eval_binary_expr(op1,oper,op2))
             args.remove(args[indx - 1])
             args.remove(args[indx - 1])
             args.remove(args[indx - 1])
             op1 = 0
             args.insert(indx-1,str(val))
-            ra = indx - 1
+            ra -= 1
         except Exception as es:
-            print(es)
+            # print(args)
+            print('Special ones completed')
             break
-    print(args)
+    # print(args)
 
 
     for ar in range(len(args)):
@@ -73,11 +72,11 @@ def getNumber(*args):
 
 def callOpr():
     try:
-        # my_string = getVoice()
-        my_string = [1, '+', 2, '+', 3, '-', 4, '+', 6, 'x',10, '-', 7, 'x', 10]
+        my_string = getVoice()
+        # my_string = [1, '+', 2, '+', 3, 'x', 6, 'x', 4, 'x', 20]
         print(my_string)
         if my_string == "Can't Calculate":
-            print('something happendd')
+            print("Something happended")
         else:
             getNumber(*(my_string))
     except Exception as es:
