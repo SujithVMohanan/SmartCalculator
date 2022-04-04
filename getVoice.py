@@ -10,7 +10,7 @@ r = sr.Recognizer()
 # getting voice from Microphone
 def getMicVoice():
     with sr.Microphone() as source:
-        print("Say")
+        # print("Say")
         r.adjust_for_ambient_noise(source)     # reducing the noices 
         audio = r.listen(source)
         voice_data = ''

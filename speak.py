@@ -1,3 +1,4 @@
+from http.client import ResponseNotReady
 import time
 from gtts import gTTS
 import playsound
@@ -6,7 +7,7 @@ from operation import callOpr
 import os
 import random
 
-
+global responsed
 audio_file = 'no.mp3'
 def speak(audio_str):
     try:
@@ -19,6 +20,7 @@ def speak(audio_str):
         os.remove(audio_file)
     except Exception as es:
         print(es)
+        speak('Sorry sir its wrong input ')
 
 
 def respond(voice_data, val):
@@ -41,22 +43,30 @@ def respond(voice_data, val):
         speak('Check Values you given again')
         saySomething() 
     else:
-        speak(voice_data + 'is equal to ' + str(val))
+        if val == "Can't Recognized" :
+            speak('Sorry sir its wrong input ')
+        else:
+            speak(voice_data + 'is equal to ' + str(val))
 
 
 
-speak("I am appu , the Calculator, do you want to calculate something Sir Say yes or no")
+speak("I am appu , the Calculator,")
 def saySomething():
     responsed = 'yes'
+    time.sleep(1)
     if responsed ==  'yes':
         speak('Calculate')
-        responsed = getMicVoice()
-        time.sleep(1)
-        r_rs = ''
-        for rs in responsed:
-            r_rs =r_rs + str(rs)
-        val = callOpr(responsed)
-        respond(str(r_rs), val)
+        try:
+            responsed = getMicVoice()
+            time.sleep(1)
+            r_rs = ''
+            for rs in responsed:
+                r_rs =r_rs + str(rs)
+            val = callOpr(responsed)
+            respond(str(r_rs), val)
+        except:
+            speak('Again')
+            saySomething()
     else:
         respond(responsed[0], '')
 
